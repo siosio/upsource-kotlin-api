@@ -6,7 +6,7 @@
 ```kotlin
 val client = UpsourceClient("http://localhost:8080/", "siosio", "password")
 
-client.projectManager().getAllProjects() {
+client.projectManager().allProjects {
   println("it = ${it}")
 }
 ```

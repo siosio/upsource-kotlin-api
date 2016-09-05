@@ -11,11 +11,11 @@ class IntegrationTest {
 
   @Test
   fun getAllProject() {
-    sut.projectManager().getAllProjects().forEach {
+    sut.projectManager().allProjects().forEach {
       println(it)
     }
 
-    sut.projectManager().getAllProjects() {
+    sut.projectManager().allProjects {
       println("it = ${it}")
     }
   }
@@ -23,8 +23,8 @@ class IntegrationTest {
   @Test
   fun getProjectInfo() {
     val projectManager = sut.projectManager()
-    projectManager.getAllProjects {
-      val projectInfo = projectManager.getProjectInfo(it.projectId)
+    projectManager.allProjects {
+      val projectInfo = projectManager[it.projectId]
       println("projectInfo = $projectInfo")
     }
   }

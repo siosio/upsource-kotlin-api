@@ -6,6 +6,7 @@ import org.apache.http.client.methods.*
 import org.apache.http.entity.*
 import org.apache.http.impl.client.*
 import org.slf4j.*
+import java.io.*
 
 internal class UpsourceApi(
     private val server: String,

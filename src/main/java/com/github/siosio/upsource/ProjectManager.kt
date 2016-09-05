@@ -5,17 +5,19 @@ import com.github.siosio.upsource.internal.*
 
 class ProjectManager internal constructor(private val upsourceApi: UpsourceApi) {
 
-  fun getAllProjects(): List<Project> {
+  fun allProjects(): List<Project> {
     val projectInfoList = upsourceApi.send(GetAllProjectCommand())
 
     return projectInfoList.project
   }
 
-  fun getAllProjects(block: (Project) -> Unit) {
-    getAllProjects().forEach {
+  fun allProjects(block: (Project) -> Unit) {
+    allProjects().forEach {
       block(it)
     }
   }
+  
+  operator fun get(projectId: String) = getProjectInfo(projectId)
 
   fun getProjectInfo(projectId: String): ProjectInfo {
     return upsourceApi.send(GetProjectInfoCommand(projectId))
