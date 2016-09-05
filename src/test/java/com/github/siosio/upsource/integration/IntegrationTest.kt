@@ -52,4 +52,11 @@ class IntegrationTest {
       )
     }
   }
+
+  @Test
+  fun deleteProject() {
+    sut.projectManager { 
+      -"kotlin-sql"
+    }
+  }
 }

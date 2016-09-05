@@ -23,6 +23,9 @@ class ProjectManager internal constructor(private val upsourceApi: UpsourceApi) 
     return upsourceApi.send(GetProjectInfoCommand(projectId))
   }
 
+  /**
+   * create project
+   */
   operator fun CreateProjectRequest.unaryPlus() {
     upsourceApi.send(CreateProjectCommand(this))
   }
@@ -73,6 +76,13 @@ class ProjectManager internal constructor(private val upsourceApi: UpsourceApi) 
             autoAddRevisionsToReview = autoAddRevisionsToReview
         )
     )
+  }
+
+  /**
+   * delete project
+   */
+  operator fun String.unaryMinus() {
+    upsourceApi.send(DeleteProjectCommand(ProjectId(this)))
   }
 
   private fun toJson(obj: Any): String {
