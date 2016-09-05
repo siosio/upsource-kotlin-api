@@ -1,0 +1,28 @@
+{
+  "result": {
+    "projectId": "sample-project",
+    "projectName": "サンプルプロジェクト",
+    "headHash": "abc123",
+    "codeReviewIdPattern": "sample-{}",
+    "externalLinks": [
+      {
+        "url": "http://hoge.com",
+        "prefix": "issue-"
+      },
+      {
+        "url": "http://hoge.com",
+        "prefix": "hotfix-"
+      }
+    ],
+    "issueTrackerConnections": [
+      {
+        "url": "http://hogehoge.com",
+        "prefix": "hogehoge:"
+      }
+    ],
+    "projectModelType": "Gradle",
+    "defaultEffectiveCharset": "utf-8",
+    "defaultBranch": "develop",
+    "isConnectedToGithub": "false"
+  }
+}

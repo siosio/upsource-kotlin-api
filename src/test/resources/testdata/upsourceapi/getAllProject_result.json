@@ -1,0 +1,20 @@
+{
+  "result": {
+    "project": [
+      {
+        "projectId": "sample-project",
+        "projectName": "サンプルプロジェクト",
+        "headHash": "123321",
+        "isReady": false,
+        "lastCommitDate": 1472252558519,
+        "lastCommitAuthorName": "siosio"
+      },
+      {
+        "projectId": "project2",
+        "projectName": "プロジェクト2",
+        "headHash": "abcabc",
+        "isReady": true
+      }
+    ]
+  }
+}
