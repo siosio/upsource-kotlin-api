@@ -29,11 +29,9 @@ internal class UpsourceApi(
     post.entity = StringEntity(requestBody, ContentType.APPLICATION_JSON)
 
     val response = httpClient.execute(post)
+    val statusCode = response.statusLine.statusCode
 
     log.info("response:{}", response.statusLine)
-
-    val statusCode = response.statusLine.statusCode
-    log.info("statusCode:{}", statusCode)
 
     if (statusCode == 200) {
       response.entity.content.bufferedReader(charset("utf-8")).use {

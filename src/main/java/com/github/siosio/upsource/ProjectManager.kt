@@ -21,7 +21,11 @@ class ProjectManager internal constructor(private val upsourceApi: UpsourceApi) 
     return upsourceApi.send(GetProjectInfoCommand(projectId))
   }
 
-  fun createProject(
+  operator fun CreateProjectRequest.unaryPlus() {
+    upsourceApi.send(CreateProjectCommand(this))
+  }
+
+  fun project(
       projectId: String,
       projectName: String,
       projectType: ProjectType,
@@ -34,41 +38,39 @@ class ProjectManager internal constructor(private val upsourceApi: UpsourceApi) 
       mavenSettings: String? = null,
       mavenProfiles: String? = null,
       mavenJdkName: String? = null,
-      links: ExternalLinks.() -> Unit,
+      links: ExternalLinks.() -> Unit = {},
       createUserGroups: Boolean? = null,
       userManagementUrl: String? = null,
       defaultEncoding: String? = null,
       defaultBranch: String? = null,
       autoAddRevisionsToReview: Boolean? = null
-  ) {
+  ): CreateProjectRequest {
 
     val vcsSettings = VcsSettings()
     vcsSettings.vcs()
     val externalLinks = ExternalLinks()
     externalLinks.links()
 
-    upsourceApi.send(CreateProjectCommand(
-        CreateProjectRequest(
-            newProjectId = projectId,
-            settings = ProjectSettings(
-                projectName = projectName,
-                codeReviewIdPattern = codeReviewIdPattern,
-                checkIntervalSeconds = checkIntervalSeconds,
-                vcsSettings = toJson(mapOf("mappings" to vcsSettings.vcsSettings)),
-                runInspections = runInspections,
-                projectModel = ProjectModel(projectType.value, pathToModel, defaultJdkId),
-                mavenSettings = mavenSettings,
-                mavenProfiles = mavenProfiles,
-                mavenJdkName = mavenJdkName,
-                externalLinks = externalLinks.externalLinks,
-                createUserGroups = createUserGroups,
-                userManagementUrl = userManagementUrl,
-                defaultBranch = defaultBranch,
-                defaultEncoding = defaultEncoding,
-                autoAddRevisionsToReview = autoAddRevisionsToReview
-            )
+    return CreateProjectRequest(
+        newProjectId = projectId,
+        settings = ProjectSettings(
+            projectName = projectName,
+            codeReviewIdPattern = codeReviewIdPattern,
+            checkIntervalSeconds = checkIntervalSeconds,
+            vcsSettings = toJson(mapOf("mappings" to vcsSettings.vcsSettings)),
+            runInspections = runInspections,
+            projectModel = ProjectModel(projectType.value, pathToModel, defaultJdkId),
+            mavenSettings = mavenSettings,
+            mavenProfiles = mavenProfiles,
+            mavenJdkName = mavenJdkName,
+            externalLinks = externalLinks.externalLinks,
+            createUserGroups = createUserGroups,
+            userManagementUrl = userManagementUrl,
+            defaultBranch = defaultBranch,
+            defaultEncoding = defaultEncoding,
+            autoAddRevisionsToReview = autoAddRevisionsToReview
         )
-    ))
+    )
   }
 
   private fun toJson(obj: Any): String {

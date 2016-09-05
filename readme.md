@@ -6,7 +6,7 @@
 ```kotlin
 val client = UpsourceClient("http://localhost:8080/", "siosio", "password")
 
-client.getProjectManager().getAllProjects() {
+client.projectManager().getAllProjects() {
   println("it = ${it}")
 }
 ```
@@ -15,7 +15,8 @@ client.getProjectManager().getAllProjects() {
 ```kotlin
 val client = UpsourceClient("http://localhost:8080/", "siosio", "password")
 
-client.getProjectManager().createProject(
+client.projectManager() {
+  +project(
     projectId = "kotlin-sql",
     projectName = "kotlinのSQL",
     projectType = ProjectType.Gradle,
@@ -23,5 +24,6 @@ client.getProjectManager().createProject(
     vcs = {
       +repository(id = "kotlin-sql", vcs = Vcs.git, url = "https://github.com/siosio/kotlin-sql")
     }
-)
+  )
+}
 ```

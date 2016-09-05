@@ -18,8 +18,14 @@ class UpsourceClient(
     upsourceApi = UpsourceApi(server, upsourceAccount, httpClient)
   }
 
-  fun getProjectManager(): ProjectManager {
+  fun projectManager(): ProjectManager {
     return ProjectManager(upsourceApi)
+  }
+  
+  fun projectManager(init: ProjectManager.() -> Unit): ProjectManager {
+    val projectManager = ProjectManager(upsourceApi)
+    projectManager.init()
+    return projectManager
   }
 
 }
