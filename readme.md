@@ -4,18 +4,21 @@
 
 ### get all project
 ```kotlin
-val client = UpsourceClient("http://localhost:8080/", "siosio", "password")
+val upsource = UpsourceClient("http://localhost:8080/", "siosio", "password")
 
-client.projectManager().allProjects {
-  println("it = ${it}")
+
+upsource.project {
+  allProjects {
+    println("it = ${it}")
+  }
 }
 ```
 
 ### create project
 ```kotlin
-val client = UpsourceClient("http://localhost:8080/", "siosio", "password")
+val usource = UpsourceClient("http://localhost:8080/", "siosio", "password")
 
-client.projectManager() {
+usource.project {
   +project(
     projectId = "kotlin-sql",
     projectName = "kotlinのSQL",

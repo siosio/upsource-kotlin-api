@@ -16,7 +16,10 @@ class ProjectManager internal constructor(private val upsourceApi: UpsourceApi) 
       block(it)
     }
   }
-  
+
+  /**
+   * get project
+   */
   operator fun get(projectId: String) = getProjectInfo(projectId)
 
   fun getProjectInfo(projectId: String): ProjectInfo {

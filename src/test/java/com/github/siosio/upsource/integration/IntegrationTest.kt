@@ -2,7 +2,9 @@ package com.github.siosio.upsource.integration
 
 import com.github.siosio.upsource.*
 import com.github.siosio.upsource.bean.*
+import org.hamcrest.CoreMatchers.*
 import org.junit.*
+import org.junit.Assert.*
 
 
 class IntegrationTest {
@@ -11,27 +13,16 @@ class IntegrationTest {
 
   @Test
   fun getAllProject() {
-    sut.projectManager().allProjects().forEach {
-      println(it)
-    }
-
-    sut.projectManager().allProjects {
-      println("it = ${it}")
-    }
-  }
-
-  @Test
-  fun getProjectInfo() {
-    val projectManager = sut.projectManager()
-    projectManager.allProjects {
-      val projectInfo = projectManager[it.projectId]
-      println("projectInfo = $projectInfo")
+    sut.project {
+      allProjects {
+        println("it = ${it}")
+      }
     }
   }
 
   @Test
   fun createProject() {
-    sut.projectManager() {
+    sut.project {
       +project(
           projectId = "kotlin-sql",
           projectName = "kotlinのSQL",
@@ -50,12 +41,10 @@ class IntegrationTest {
           defaultEncoding = "utf-8",
           defaultBranch = "master"
       )
-    }
-  }
 
-  @Test
-  fun deleteProject() {
-    sut.projectManager { 
+      val project = this["kotlin-sql"]
+      assertThat(project.projectId, `is`("kotlin-sql"))
+
       -"kotlin-sql"
     }
   }
