@@ -2,9 +2,11 @@ package com.github.siosio.upsource.integration
 
 import com.github.siosio.upsource.*
 import com.github.siosio.upsource.bean.*
+import com.github.siosio.upsource.exception.*
 import org.hamcrest.CoreMatchers.*
 import org.junit.*
 import org.junit.Assert.*
+import java.util.concurrent.*
 
 
 class IntegrationTest {
@@ -42,8 +44,17 @@ class IntegrationTest {
           defaultBranch = "master"
       )
 
-      val project = this["kotlin-sql"]
-      assertThat(project.projectId, `is`("kotlin-sql"))
+      for (i in (1..5)) {
+        try {
+          val project = this["kotlin-sql"]
+          assertThat(project.projectId, `is`("kotlin-sql"))
+          break
+        } catch (e: ProjectNotFoundException) {
+          println("e.message = ${e.message}")
+          TimeUnit.SECONDS.sleep(5)
+        }
+      }
+
 
       -"kotlin-sql"
     }

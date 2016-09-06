@@ -1,13 +1,13 @@
 package com.github.siosio.upsource
 
 import com.github.siosio.upsource.bean.*
+import com.github.siosio.upsource.exception.*
 import com.github.siosio.upsource.internal.*
 
 class ProjectManager internal constructor(private val upsourceApi: UpsourceApi) {
 
   fun allProjects(): List<Project> {
     val projectInfoList = upsourceApi.send(GetAllProjectCommand())
-
     return projectInfoList.project
   }
 
@@ -23,7 +23,7 @@ class ProjectManager internal constructor(private val upsourceApi: UpsourceApi) 
   operator fun get(projectId: String) = getProjectInfo(projectId)
 
   fun getProjectInfo(projectId: String): ProjectInfo {
-    return upsourceApi.send(GetProjectInfoCommand(projectId))
+    return upsourceApi.send(GetProjectInfoCommand(projectId)) ?: throw ProjectNotFoundException(projectId)
   }
 
   /**

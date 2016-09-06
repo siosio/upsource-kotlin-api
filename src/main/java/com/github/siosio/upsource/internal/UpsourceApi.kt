@@ -33,17 +33,17 @@ internal class UpsourceApi(
     val statusCode = response.statusLine.statusCode
 
     log.info("response:{}", response.statusLine)
+    val bodyText = response.entity.content.bufferedReader(charset("utf-8")).use {
+      it.readText()
+    }
 
     if (statusCode == 200) {
-      response.entity.content.bufferedReader(charset("utf-8")).use {
-        val body = it.readText()
-        val result = objectMapper.readValue(body, Map::class.java)
-        return objectMapper.convertValue(result["result"], command.responseType)
-      }
+      val result = objectMapper.readValue(bodyText, Map::class.java)
+      return objectMapper.convertValue(result["result"], command.responseType)
     } else if (statusCode >= 500) {
-      throw ServerError("response status line:${response.statusLine}")
+      throw ServerError("response status line:${response.statusLine}, body:$bodyText")
     } else if (statusCode >= 400) {
-      throw ClientError("response status line:${response.statusLine}")
+      throw ClientError("response status line:${response.statusLine}, body:$bodyText")
     } else {
       throw IllegalStateException("")
     }
