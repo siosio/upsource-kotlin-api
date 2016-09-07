@@ -36,7 +36,7 @@ internal class CreateReviewTest : UpsourceApiTestSupport() {
 
     assertThat(review, `is`(
         ReviewDescriptor(
-            reviewId = ReviewId("test-pj", "TEST-1"),
+            review = ReviewId("test-pj", "TEST-1"),
             title = "レビュー",
             participants = listOf(ParticipantInReview("7107595a-cb57-4139-a1eb-76afa61668ad", RoleInReviewEnum.Unread, ParticipantStateEnum.Author)),
             state = ReviewStateEnum.Open,

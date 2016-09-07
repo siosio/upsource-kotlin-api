@@ -99,9 +99,18 @@ class ProjectManager internal constructor(private val upsourceApi: UpsourceApi) 
     return CreateReviewRequest(projectId, title, revisions, branch)
   }
 
+  /**
+   * delete review
+   */
+  operator fun ReviewId.unaryMinus() {
+    upsourceApi.send(RemoveReviewCommand(this))
+  }
+
   private fun toJson(obj: Any): String {
     return ObjectMapperCreator.create().writeValueAsString(obj)
   }
+
+  fun review(projectId: String, reviewId:String) = ReviewId(projectId, reviewId)
 }
 
 class VcsSettings {

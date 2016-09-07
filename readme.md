@@ -30,3 +30,26 @@ usource.project {
   )
 }
 ```
+
+### review
+```kotlin
+val usource = UpsourceClient("http://localhost:8080/", "siosio", "password")
+
+// create review
+usource.project {
+  val review = +review(
+      projectId = "demo",
+      title = "Hello Kotlinをば",
+      branch = "feature/2"
+  )
+}
+
+// delete review
+upsource.project {
+  -review(
+    projectId = "demo",
+    reviewId = "demo-1"
+  )
+}
+
+```

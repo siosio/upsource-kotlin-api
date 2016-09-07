@@ -27,7 +27,7 @@ internal class GetAllProjects : UpsourceApiTestSupport() {
     val project = sut.send(GetAllProjectCommand())
 
     // -------------------------------------------------- assert
-    assertThat(httpPost.value.uri.toASCIIString(), CoreMatchers.`is`("http://testserver/~rpc/allProjects"))
+    assertThat(httpPost.value.uri.toASCIIString(), CoreMatchers.`is`("http://testserver/~rpc/getAllProjects"))
 
     assertThat(project.project, Matchers.contains(
         Project(

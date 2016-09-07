@@ -66,7 +66,15 @@ class IntegrationTest {
           title = "Hello Kotlinをば",
           branch = "feature/2"
       )
+      println("----------------------------------------------------------------------------------------------------")
+      println(review)
+      println("----------------------------------------------------------------------------------------------------")
+
       assertThat(review.branch, `is`("feature/2"))
+
+      println("******************** delete review: ${review.reviewId}")
+      -review(review.projectId, review.reviewId)
+
     }
   }
 }

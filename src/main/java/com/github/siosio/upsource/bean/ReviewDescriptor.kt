@@ -1,7 +1,9 @@
 package com.github.siosio.upsource.bean
 
+import com.fasterxml.jackson.annotation.*
+
 data class ReviewDescriptor(
-    val reviewId: ReviewId,
+    @JsonProperty("reviewId") private val review: ReviewId,
     val title: String,
     val participants: List<ParticipantInReview>?,
     val state: ReviewStateEnum,
@@ -14,10 +16,12 @@ data class ReviewDescriptor(
     val createdAt: Long,
     val updatedAt: Long,
     val completionRate: CompletionRate
-)
+) {
+  val projectId: String
+  val reviewId: String
 
-data class CompletionRate(
-    val completedCount: Int,
-    val reviewersCount: Int
-)
-
+  init {
+    projectId = review.projectId
+    reviewId = review.reviewId
+  }
+}
