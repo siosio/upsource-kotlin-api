@@ -88,6 +88,17 @@ class ProjectManager internal constructor(private val upsourceApi: UpsourceApi) 
     upsourceApi.send(DeleteProjectCommand(ProjectId(this)))
   }
 
+  /**
+   * create review
+   */
+  operator fun CreateReviewRequest.unaryPlus(): ReviewDescriptor {
+    return upsourceApi.send(CreateReviewCommand(this))
+  }
+
+  fun review(projectId: String, title: String, revisions: List<String> = emptyList(), branch: String? = null): CreateReviewRequest {
+    return CreateReviewRequest(projectId, title, revisions, branch)
+  }
+
   private fun toJson(obj: Any): String {
     return ObjectMapperCreator.create().writeValueAsString(obj)
   }

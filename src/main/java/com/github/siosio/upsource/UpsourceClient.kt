@@ -5,7 +5,7 @@ import com.github.siosio.upsource.internal.*
 import org.apache.http.impl.client.*
 
 class UpsourceClient(
-    private val server: String,
+    server: String,
     user: String,
     password: String
 ) {

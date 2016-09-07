@@ -54,9 +54,19 @@ class IntegrationTest {
           TimeUnit.SECONDS.sleep(5)
         }
       }
-
-
       -"kotlin-sql"
+    }
+  }
+
+  @Test
+  fun createReview() {
+    sut.project {
+      val review = +review(
+          projectId = "demo",
+          title = "Hello Kotlinをば",
+          branch = "feature/2"
+      )
+      assertThat(review.branch, `is`("feature/2"))
     }
   }
 }

@@ -1,0 +1,26 @@
+{
+  "result": {
+    "reviewId": {
+      "projectId": "test-pj",
+      "reviewId": "TEST-1"
+    },
+    "title": "レビュー",
+    "state": 1,
+    "participants": [
+      {
+        "userId": "7107595a-cb57-4139-a1eb-76afa61668ad",
+        "role": 1,
+        "state": 1
+      }
+    ],
+    "branch": "feature/1",
+    "isRemoved": false,
+    "createdBy": "7107595a-cb57-4139-a1eb-76afa61668ad",
+    "createdAt": 1473230747402,
+    "updatedAt": 1473230747403,
+    "completionRate": {
+      "completedCount": 0,
+      "reviewersCount": 0
+    }
+  }
+}
