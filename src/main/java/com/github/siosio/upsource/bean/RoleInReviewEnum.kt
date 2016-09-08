@@ -3,10 +3,9 @@ package com.github.siosio.upsource.bean
 import com.fasterxml.jackson.annotation.*
 
 enum class RoleInReviewEnum(val value: Int) {
-  Unread(1),
-  Read(2),
-  Accepted(3),
-  Rejected(4);
+  Author(1),
+  Reviewer(2),
+  Watcher(3);
 
   @JsonValue
   fun toValue(): Int = value

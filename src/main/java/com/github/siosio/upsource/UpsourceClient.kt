@@ -24,5 +24,10 @@ class UpsourceClient(
     return projectManager
   }
 
+  fun review(init: ReviewManager.() -> Unit): ReviewManager {
+    val review = ReviewManager(upsourceApi)
+    review.init()
+    return review
+  }
 }
 

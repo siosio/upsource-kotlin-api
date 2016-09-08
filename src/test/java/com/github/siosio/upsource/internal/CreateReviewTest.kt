@@ -2,7 +2,6 @@ package com.github.siosio.upsource.internal
 
 import com.github.siosio.upsource.*
 import com.github.siosio.upsource.bean.*
-import com.jayway.jsonpath.matchers.*
 import com.jayway.jsonpath.matchers.JsonPathMatchers.*
 import org.hamcrest.CoreMatchers.*
 import org.junit.*
@@ -38,7 +37,7 @@ internal class CreateReviewTest : UpsourceApiTestSupport() {
         ReviewDescriptor(
             review = ReviewId("test-pj", "TEST-1"),
             title = "レビュー",
-            participants = listOf(ParticipantInReview("7107595a-cb57-4139-a1eb-76afa61668ad", RoleInReviewEnum.Unread, ParticipantStateEnum.Author)),
+            participants = listOf(ParticipantInReview("7107595a-cb57-4139-a1eb-76afa61668ad", RoleInReviewEnum.Author, ParticipantStateEnum.Unread)),
             state = ReviewStateEnum.Open,
             isUnread = null,
             priority = null,

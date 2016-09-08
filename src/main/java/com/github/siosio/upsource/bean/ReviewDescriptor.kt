@@ -3,7 +3,7 @@ package com.github.siosio.upsource.bean
 import com.fasterxml.jackson.annotation.*
 
 data class ReviewDescriptor(
-    @JsonProperty("reviewId") private val review: ReviewId,
+    @JsonProperty("reviewId") val review: ReviewId,
     val title: String,
     val participants: List<ParticipantInReview>?,
     val state: ReviewStateEnum,
@@ -17,7 +17,9 @@ data class ReviewDescriptor(
     val updatedAt: Long,
     val completionRate: CompletionRate
 ) {
+  @JsonIgnore
   val projectId: String
+  @JsonIgnore
   val reviewId: String
 
   init {
