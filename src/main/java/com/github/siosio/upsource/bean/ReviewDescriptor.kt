@@ -17,6 +17,7 @@ data class ReviewDescriptor(
     val updatedAt: Long,
     val completionRate: CompletionRate
 ) {
+
   @JsonIgnore
   val projectId: String
   @JsonIgnore

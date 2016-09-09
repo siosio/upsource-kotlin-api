@@ -9,7 +9,7 @@ class ReviewManager internal constructor(val upsourceApi: UpsourceApi) {
     upsourceApi.send(AddParticipantToReviewCommand(this))
   }
 
-  fun reviewer(reviewId: ReviewId, userId: String): ParticipantInReviewRequest {
-    return ParticipantInReviewRequest(reviewId, ParticipantInReview(userId, RoleInReviewEnum.Reviewer))
+  fun reviewer(projectId:String, reviewId: String, userId: String): ParticipantInReviewRequest {
+    return ParticipantInReviewRequest(ReviewId(projectId, reviewId), ParticipantInReview(userId, RoleInReviewEnum.Reviewer))
   }
 }

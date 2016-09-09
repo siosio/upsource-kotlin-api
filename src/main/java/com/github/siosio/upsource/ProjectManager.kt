@@ -110,6 +110,11 @@ class ProjectManager internal constructor(private val upsourceApi: UpsourceApi) 
     return ObjectMapperCreator.create().writeValueAsString(obj)
   }
 
+  fun review(projectId: String, reviewId: String, init: ReviewManagerWithReview.() -> Unit) {
+    val review = ReviewManagerWithReview(ReviewId(projectId, reviewId), upsourceApi)
+    review.init()
+  }
+
   fun review(projectId: String, reviewId:String) = ReviewId(projectId, reviewId)
 }
 

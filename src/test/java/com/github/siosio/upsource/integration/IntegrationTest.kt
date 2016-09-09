@@ -72,13 +72,13 @@ class IntegrationTest {
 
       assertThat(review.branch, `is`("feature/2"))
 
-      sut.review {
-        +reviewer(review.review, "81db1f0d-bcb2-4ae4-9174-08fff2fc7a4f")
+      review(review.projectId, review.reviewId) {
+        +reviewer("81db1f0d-bcb2-4ae4-9174-08fff2fc7a4f")
+        +reviewer("8a4f008c-ef07-4d2a-91d1-58324e71b107")
       }
 
       println("******************** delete review: ${review.reviewId}")
       -review(review.projectId, review.reviewId)
-
     }
   }
 }
