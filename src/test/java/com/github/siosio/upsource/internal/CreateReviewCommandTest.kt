@@ -8,7 +8,7 @@ import org.junit.*
 import org.junit.Assert.*
 import org.mockito.*
 
-internal class CreateReviewTest : UpsourceApiTestSupport() {
+internal class CreateReviewCommandTest : UpsourceApiTestSupport() {
   @Test
   fun createReview() {
 

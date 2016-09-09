@@ -10,7 +10,7 @@ import org.junit.*
 import org.junit.Assert.*
 import org.mockito.*
 
-internal class GetProjectInfo : UpsourceApiTestSupport() {
+internal class GetProjectInfoCommandTest : UpsourceApiTestSupport() {
 
   @Test
   fun testGetProjectInfo() {

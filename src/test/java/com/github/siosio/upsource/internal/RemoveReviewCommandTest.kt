@@ -9,13 +9,13 @@ import org.junit.*
 import org.junit.Assert.*
 import org.mockito.*
 
-internal class RemoveReviewTest : UpsourceApiTestSupport() {
+internal class RemoveReviewCommandTest : UpsourceApiTestSupport() {
   @Test
   fun removeReview() {
 
     // -------------------------------------------------- setup
     Mockito.`when`(mockResponse.entity).thenReturn(
-        TestData("testdata/upsourceapi/removeReview_result.json").getStringEntity()
+        TestData("testdata/upsourceapi/voidMessageResult.json").getStringEntity()
     )
 
     // -------------------------------------------------- execute

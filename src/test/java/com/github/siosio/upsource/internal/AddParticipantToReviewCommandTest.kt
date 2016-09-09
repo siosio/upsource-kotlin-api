@@ -2,17 +2,16 @@ package com.github.siosio.upsource.internal
 
 import com.github.siosio.upsource.*
 import com.github.siosio.upsource.bean.*
-import com.jayway.jsonpath.matchers.*
 import com.jayway.jsonpath.matchers.JsonPathMatchers.*
-import org.hamcrest.*
 import org.hamcrest.CoreMatchers.*
 import org.junit.*
 import org.junit.Assert.*
 import org.mockito.*
 
-internal class DeleteProjectCommandTest : UpsourceApiTestSupport() {
+internal class AddParticipantToReviewCommandTest : UpsourceApiTestSupport() {
+
   @Test
-  fun deleteProject() {
+  fun addParticipantToReview() {
 
     // -------------------------------------------------- setup
     Mockito.`when`(mockResponse.entity).thenReturn(
@@ -20,18 +19,19 @@ internal class DeleteProjectCommandTest : UpsourceApiTestSupport() {
     )
 
     // -------------------------------------------------- execute
-    val voidMessage = sut.send(DeleteProjectCommand(ProjectId("kotlin-sql")))
+    sut.send(AddParticipantToReviewCommand(
+        ParticipantInReviewRequest(ReviewId("prj", "review-1"), ParticipantInReview("user1", RoleInReviewEnum.Reviewer))))
 
     // -------------------------------------------------- assert
-    assertThat(httpPost.value.uri.toASCIIString(), CoreMatchers.`is`("http://testserver/~rpc/deleteProject"))
-
-    assertThat(voidMessage, CoreMatchers.`is`(VoidMessage()))
-
+    assertThat(httpPost.value.uri.toASCIIString(), `is`("http://testserver/~rpc/addParticipantToReview"))
     assertThat(httpPost.value.entity.content.readText(),
         allOf(
-            hasJsonPath("projectId", equalTo("kotlin-sql"))
+            hasJsonPath("reviewId.projectId", equalTo("prj")),
+            hasJsonPath("reviewId.reviewId", equalTo("review-1")),
+            hasJsonPath("participant.userId", equalTo("user1")),
+            hasJsonPath("participant.role", equalTo(2)),
+            hasNoJsonPath("participant.state")
         )
     )
   }
-
 }

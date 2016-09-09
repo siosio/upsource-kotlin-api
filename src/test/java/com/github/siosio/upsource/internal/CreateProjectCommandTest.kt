@@ -9,14 +9,14 @@ import org.junit.*
 import org.junit.Assert.*
 import org.mockito.*
 
-internal class CreateProjectTest : UpsourceApiTestSupport() {
+internal class CreateProjectCommandTest : UpsourceApiTestSupport() {
 
   @Test
   fun createProject() {
 
     // -------------------------------------------------- setup
     Mockito.`when`(mockResponse.entity).thenReturn(
-        TestData("testdata/upsourceapi/createProject_result.json").getStringEntity()
+        TestData("testdata/upsourceapi/voidMessageResult.json").getStringEntity()
     )
 
     // -------------------------------------------------- execute

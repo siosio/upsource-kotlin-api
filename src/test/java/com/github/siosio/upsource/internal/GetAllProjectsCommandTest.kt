@@ -12,7 +12,7 @@ import org.junit.Assert.*
 import org.mockito.*
 import org.mockito.ArgumentCaptor.*
 
-internal class GetAllProjects : UpsourceApiTestSupport() {
+internal class GetAllProjectsCommandTest : UpsourceApiTestSupport() {
 
   @Test
   fun testGetAllProjects() {
