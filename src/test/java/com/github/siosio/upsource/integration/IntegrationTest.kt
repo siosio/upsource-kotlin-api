@@ -62,7 +62,7 @@ class IntegrationTest {
   fun createReview() {
     sut.project("demo") {
 
-      val review = +review(
+      val reviewId = (+review(
           title = "Hello Kotlinをば",
           branch = "feature/2"
       ) {
@@ -73,7 +73,9 @@ class IntegrationTest {
         reviewer("8a4f008c-ef07-4d2a-91d1-58324e71b107")
 
         watcher("0aa10d06-13f1-4f96-bfb4-789bb2041571")
-      }
+      }).reviewId
+
+      val review = review(reviewId).details()
 
       println("----------------------------------------------------------------------------------------------------")
       println(review)

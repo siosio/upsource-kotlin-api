@@ -30,6 +30,13 @@ class ProjectManagerWithProject internal constructor(val projectId: String, val 
     upsourceApi.send(RemoveReviewCommand(this))
   }
 
+  /**
+   *  get review
+   */
+  fun ReviewId.details(): ReviewDescriptor {
+    return upsourceApi.send(GetReviewDetailsCommand(this))
+  }
+
   fun review(reviewId: String) = ReviewId(projectId, reviewId)
 
   /**
