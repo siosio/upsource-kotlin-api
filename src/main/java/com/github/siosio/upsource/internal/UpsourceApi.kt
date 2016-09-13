@@ -6,7 +6,6 @@ import org.apache.http.client.methods.*
 import org.apache.http.entity.*
 import org.apache.http.impl.client.*
 import org.slf4j.*
-import java.io.*
 
 internal class UpsourceApi(
     private val server: String,
@@ -26,13 +25,13 @@ internal class UpsourceApi(
     val objectMapper = ObjectMapperCreator.create()
     val requestBody = objectMapper.writeValueAsString(command.getRequest())
 
-    log.info("api: {}, body:{}", command.name, requestBody)
+    log.debug("api: {}, body:{}", command.name, requestBody)
     post.entity = StringEntity(requestBody, ContentType.APPLICATION_JSON)
 
     val response = httpClient.execute(post)
     val statusCode = response.statusLine.statusCode
 
-    log.info("response:{}", response.statusLine)
+    log.debug("response:{}", response.statusLine)
     val bodyText = response.entity.content.bufferedReader(charset("utf-8")).use {
       it.readText()
     }
@@ -40,12 +39,19 @@ internal class UpsourceApi(
     if (statusCode == 200) {
       val result = objectMapper.readValue(bodyText, Map::class.java)
       return objectMapper.convertValue(result["result"], command.responseType)
-    } else if (statusCode >= 500) {
-      throw ServerError("response status line:${response.statusLine}, body:$bodyText")
     } else if (statusCode >= 400) {
-      throw ClientError("response status line:${response.statusLine}, body:$bodyText")
+      throw createUpsourceError(statusCode, bodyText)
     } else {
-      throw IllegalStateException("")
+      throw IllegalStateException("statusCode:$statusCode")
+    }
+  }
+
+  private fun createUpsourceError(statusCode: Int, body: String): UpsourceError {
+    val (code, message) = ObjectMapperCreator.create().readValue(body, ErrorResponse::class.java).error
+    return if (statusCode >= 500) {
+      ServerError(statusCode, code, message)
+    } else {
+      ClientError(statusCode, code, message)
     }
   }
 }
