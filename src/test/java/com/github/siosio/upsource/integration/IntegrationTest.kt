@@ -69,13 +69,15 @@ class IntegrationTest {
 
         assertThat(branch, `is`("feature/2"))
 
-        reviewer("81db1f0d-bcb2-4ae4-9174-08fff2fc7a4f")
-        reviewer("8a4f008c-ef07-4d2a-91d1-58324e71b107")
+        +reviewer("81db1f0d-bcb2-4ae4-9174-08fff2fc7a4f")
+        +reviewer("8a4f008c-ef07-4d2a-91d1-58324e71b107")
 
-        watcher("0aa10d06-13f1-4f96-bfb4-789bb2041571")
+        +watcher("0aa10d06-13f1-4f96-bfb4-789bb2041571")
       }).reviewId
 
-      val review = review(reviewId).details()
+      val review = review(reviewId).details() {
+        -reviewer("8a4f008c-ef07-4d2a-91d1-58324e71b107")
+      }
 
       println("----------------------------------------------------------------------------------------------------")
       println(review)

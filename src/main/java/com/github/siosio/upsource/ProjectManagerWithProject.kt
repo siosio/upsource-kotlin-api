@@ -33,26 +33,34 @@ class ProjectManagerWithProject internal constructor(val projectId: String, val 
   /**
    *  get review
    */
-  fun ReviewId.details(): ReviewDescriptor {
-    return upsourceApi.send(GetReviewDetailsCommand(this))
+  fun ReviewId.details(block: (ReviewDescriptor.()-> Unit) ?): ReviewDescriptor {
+    val review = upsourceApi.send(GetReviewDetailsCommand(this))
+    block?.invoke(review)
+    return review
   }
 
   fun review(reviewId: String) = ReviewId(projectId, reviewId)
 
   /**
-   * add reviewer
+   * add reviewer/watcher
    */
-  fun ReviewDescriptor.reviewer(userId: String): Unit {
-    upsourceApi.send(AddParticipantToReviewCommand(
-        ParticipantInReviewRequest(review, ParticipantInReview(userId, RoleInReviewEnum.Reviewer))))
+  operator fun ParticipantInReviewRequest.unaryPlus() {
+    upsourceApi.send(AddParticipantToReviewCommand(this))
   }
 
   /**
-   * add watcher
+   * remove reviewer/watcher
    */
-  fun ReviewDescriptor.watcher(userId: String): Unit {
-    upsourceApi.send(AddParticipantToReviewCommand(
-        ParticipantInReviewRequest(review, ParticipantInReview(userId, RoleInReviewEnum.Watcher))))
+  operator fun ParticipantInReviewRequest.unaryMinus() {
+    upsourceApi.send(AddParticipantToReviewCommand(this))
   }
+
+  fun ReviewDescriptor.reviewer(userId: String): ParticipantInReviewRequest =
+      ParticipantInReviewRequest(review, ParticipantInReview(userId, RoleInReviewEnum.Reviewer))
+
+  fun ReviewDescriptor.watcher(userId: String): ParticipantInReviewRequest =
+      ParticipantInReviewRequest(review, ParticipantInReview(userId, RoleInReviewEnum.Watcher))
+
+
 }
 
