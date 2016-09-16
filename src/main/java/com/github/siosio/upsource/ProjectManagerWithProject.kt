@@ -1,6 +1,7 @@
 package com.github.siosio.upsource
 
 import com.github.siosio.upsource.bean.*
+import com.github.siosio.upsource.exception.*
 import com.github.siosio.upsource.internal.*
 
 class ProjectManagerWithProject internal constructor(val projectId: String, val upsourceApi: UpsourceApi) {
@@ -18,28 +19,22 @@ class ProjectManagerWithProject internal constructor(val projectId: String, val 
       title: String,
       revisions: List<String> = emptyList(),
       branch: String? = null,
-      block: (ReviewDescriptor.() -> Unit)? = null) =
-      CreateReviewHolder(CreateReviewRequest(projectId, title, revisions, branch), block)
+      block: (ReviewDescriptor.() -> Unit)? = null) = CreateReviewHolder(CreateReviewRequest(projectId, title, revisions, branch), block)
 
   data class CreateReviewHolder(val createReviewRequest: CreateReviewRequest, val block: (ReviewDescriptor.() -> Unit)? = null)
 
   /**
    * delete review
    */
-  operator fun ReviewId.unaryMinus() {
-    upsourceApi.send(RemoveReviewCommand(this))
+  operator fun ReviewDescriptor.unaryMinus() {
+    upsourceApi.send(RemoveReviewCommand(this.review))
   }
 
-  /**
-   *  get review
-   */
-  fun ReviewId.details(block: (ReviewDescriptor.()-> Unit) ?): ReviewDescriptor {
-    val review = upsourceApi.send(GetReviewDetailsCommand(this))
+  fun review(reviewId: String, block: (ReviewDescriptor.() -> Unit)? = null): ReviewDescriptor {
+    val review = upsourceApi.send(GetReviewDetailsCommand(ReviewId(projectId, reviewId))) ?: throw ReviewNotFoundException(projectId, reviewId)
     block?.invoke(review)
     return review
   }
-
-  fun review(reviewId: String) = ReviewId(projectId, reviewId)
 
   /**
    * add reviewer/watcher
@@ -52,7 +47,7 @@ class ProjectManagerWithProject internal constructor(val projectId: String, val 
    * remove reviewer/watcher
    */
   operator fun ParticipantInReviewRequest.unaryMinus() {
-    upsourceApi.send(AddParticipantToReviewCommand(this))
+    upsourceApi.send(RemoveParticipantFromReviewCommand(this))
   }
 
   fun ReviewDescriptor.reviewer(userId: String): ParticipantInReviewRequest =

@@ -53,3 +53,20 @@ upsource.project("demo") {
   -review("demo-1")
 }
 ```
+
+### add reviewer(watcher)/remove reviewer(watcher)
+```kotliin
+val usource = UpsourceClient("http://localhost:8080/", "siosio", "password")
+upsourc.project("demo") {
+  review("demo-1") {
+    // add reviewer and watcher
+    +reviewer("81db1f0d-bcb2-4ae4-9174-08fff2fc7a4f")
+    +reviewer("8a4f008c-ef07-4d2a-91d1-58324e71b107")
+    +watcher("0aa10d06-13f1-4f96-bfb4-789bb2041571")
+    
+    // delete reviewer and watcher
+    -reviewer("8a4f008c-ef07-4d2a-91d1-58324e71b107")
+    -watcher("0aa10d06-13f1-4f96-bfb4-789bb2041571")
+  }
+}
+```

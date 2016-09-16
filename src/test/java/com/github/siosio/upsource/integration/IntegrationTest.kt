@@ -75,16 +75,19 @@ class IntegrationTest {
         +watcher("0aa10d06-13f1-4f96-bfb4-789bb2041571")
       }).reviewId
 
-      val review = review(reviewId).details() {
+      review(reviewId) {
         -reviewer("8a4f008c-ef07-4d2a-91d1-58324e71b107")
+        -watcher("0aa10d06-13f1-4f96-bfb4-789bb2041571")
       }
+
+      val review = review(reviewId)
 
       println("----------------------------------------------------------------------------------------------------")
       println(review)
       println("----------------------------------------------------------------------------------------------------")
 
       println("******************** delete review: ${review.reviewId}")
-      -review(review.reviewId)
+      -review(reviewId)
     }
   }
 }
