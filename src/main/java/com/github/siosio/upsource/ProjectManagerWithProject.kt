@@ -56,6 +56,9 @@ class ProjectManagerWithProject internal constructor(val projectId: String, val 
   fun ReviewDescriptor.watcher(userId: String): ParticipantInReviewRequest =
       ParticipantInReviewRequest(review, ParticipantInReview(userId, RoleInReviewEnum.Watcher))
 
+  fun ReviewDescriptor.state(state: ParticipantStateEnum) {
+    upsourceApi.send(UpdateParticipantInReviewCommand(UpdateParticipantInReviewRequest(review, state)))
+  }
 
 }
 
