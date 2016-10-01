@@ -12,9 +12,9 @@ enum class ReviewStateEnum(val value: Int) {
   companion object {
     @JsonCreator
     @JvmStatic
-    fun forValue(value: Int): ReviewStateEnum {
+    fun forValue(value: String): ReviewStateEnum {
       return values().firstOrNull {
-        it.value == value
+        it.value.toString() == value
       } ?: throw IllegalArgumentException("unknown value:$value")
     }
   }

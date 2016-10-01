@@ -14,9 +14,9 @@ enum class ParticipantStateEnum(val value: Int) {
   companion object {
     @JsonCreator
     @JvmStatic
-    fun forValue(value: Int): ParticipantStateEnum {
+    fun forValue(value: String): ParticipantStateEnum {
       return values().firstOrNull {
-        it.value == value
+        it.value.toString() == value
       } ?: throw IllegalArgumentException("unknown value:$value")
     }
   }
