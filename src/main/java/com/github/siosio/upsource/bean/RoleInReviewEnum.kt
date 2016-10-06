@@ -13,9 +13,9 @@ enum class RoleInReviewEnum(val value: Int) {
   companion object {
     @JsonCreator
     @JvmStatic
-    fun forValue(value: Int): RoleInReviewEnum {
+    fun forValue(value: String): RoleInReviewEnum {
       return values().firstOrNull {
-        it.value == value
+        it.value.toString() == value
       } ?: throw IllegalArgumentException("unknown value:$value")
     }
   }
