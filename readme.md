@@ -70,3 +70,18 @@ upsourc.project("demo") {
   }
 }
 ```
+
+### change review status
+
+```kotliin
+val usource = UpsourceClient("http://localhost:8080/", "siosio", "password")
+upsourc.project("demo") {
+  review("demo-1") {
+    // rename review
+    title("new revew title")
+  
+    // change status
+    state(ParticipantStateEnum.Accepted)
+  }
+}
+```
