@@ -67,6 +67,8 @@ class IntegrationTest {
   fun createReview() {
     sut.project("demo") {
 
+      -review("DM-CR-37")
+
       val reviewId = (+review(
           title = "Hello Kotlinをば",
           branch = "feature/2"
@@ -83,12 +85,13 @@ class IntegrationTest {
 
       UpsourceClient("http://localhost:8080/", "reviewer1", "reviewer1").project("demo") {
         review(reviewId) {
-            state(ParticipantStateEnum.Accepted)
+          title("Hello Kotlin( ･ิω･ิ)")
+          state(ParticipantStateEnum.Accepted)
         }
       }
 
       review(reviewId) {
-        assertThat(this.participants?.find { it.userId ==  "81db1f0d-bcb2-4ae4-9174-08fff2fc7a4f"}?.state, `is`(ParticipantStateEnum.Accepted))
+        assertThat(this.participants?.find { it.userId == "81db1f0d-bcb2-4ae4-9174-08fff2fc7a4f" }?.state, `is`(ParticipantStateEnum.Accepted))
         -reviewer("8a4f008c-ef07-4d2a-91d1-58324e71b107")
         -watcher("0aa10d06-13f1-4f96-bfb4-789bb2041571")
       }

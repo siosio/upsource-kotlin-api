@@ -60,5 +60,8 @@ class ProjectManagerWithProject internal constructor(val projectId: String, val 
     upsourceApi.send(UpdateParticipantInReviewCommand(UpdateParticipantInReviewRequest(review, state)))
   }
 
+  fun ReviewDescriptor.title(title:String) {
+    upsourceApi.send(RenameReviewCommand(RenameReviewRequest(review, title)))
+  }
 }
 
